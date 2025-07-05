@@ -5,19 +5,58 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>カヨッタ｜NFCタッチでリピーター獲得</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <script>
+    window.addEventListener("DOMContentLoaded", function () {
+      const form = document.querySelector("form");
+      const thankYouSection = document.getElementById("thank-you");
+      const contactSection = document.getElementById("contact-form");
+
+      form.addEventListener("submit", async function (e) {
+        e.preventDefault();
+        const formData = new FormData(form);
+        const data = Object.fromEntries(formData);
+
+        // バリデーション
+        if (!data.name || !data.email || !data.message) {
+          alert("未記入の項目があります");
+          return;
+        }
+
+        try {
+          const response = await fetch(form.action, {
+            method: "POST",
+            headers: {
+              Accept: "application/json"
+            },
+            body: formData
+          });
+
+          if (response.ok) {
+            form.style.display = "none";
+            thankYouSection.classList.remove("hidden");
+            thankYouSection.scrollIntoView({ behavior: "smooth" });
+          } else {
+            alert("送信中にエラーが発生しました。時間をおいてお試しください。");
+          }
+        } catch (error) {
+          alert("送信に失敗しました。");
+        }
+      });
+    });
+  </script>
 </head>
 <body class="bg-gray-50 text-gray-900">
   <header class="bg-white shadow">
     <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
       <h1 class="text-xl font-bold">カヨッタ</h1>
-      <a href="#contact" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">お問い合わせ</a>
+      <a href="#contact-form" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">お問い合わせ</a>
     </div>
   </header>
 
   <section class="bg-green-100 py-16 text-center">
     <h2 class="text-3xl font-bold mb-4">NFCタッチで簡単に「LINE友達追加」＆「来店スタンプ」</h2>
     <p class="text-lg mb-6">飲食店のリピーター獲得とCRMが、これ1つで簡単に。</p>
-    <a href="#contact" class="inline-block bg-green-600 text-white px-6 py-3 rounded-full hover:bg-green-700">無料で始める</a>
+    <a href="#contact-form" class="inline-block bg-green-600 text-white px-6 py-3 rounded-full hover:bg-green-700">お問い合わせ</a>
   </section>
 
   <section class="max-w-4xl mx-auto py-16 px-4">
@@ -60,11 +99,33 @@
     </div>
   </section>
 
-  <section class="bg-white py-16" id="contact">
+  <section class="bg-white py-16" id="contact-form">
     <div class="max-w-2xl mx-auto px-4 text-center">
-      <h3 class="text-2xl font-bold mb-4">まずはお気軽にお問い合わせください</h3>
-      <p class="mb-6">導入はNFCタグをレジ横に置くだけ。スマホ1つで、集客・販促が進化します。</p>
-      <a href="mailto:info@example.com" class="bg-green-600 text-white px-6 py-3 rounded-full hover:bg-green-700">メールで問い合わせる</a>
+      <h3 class="text-2xl font-bold mb-4">お問い合わせフォーム</h3>
+      <p class="mb-6">ご不明点やご相談があれば、以下のフォームからお気軽にご連絡ください。</p>
+      <form class="space-y-4 text-left" action="https://formspree.io/f/xyzjajar" method="POST">
+        <input type="hidden" name="_subject" value="カヨッタLPからのお問い合わせ" />
+        <div>
+          <label class="block mb-1">お名前</label>
+          <input type="text" name="name" class="w-full border px-3 py-2 rounded" required>
+        </div>
+        <div>
+          <label class="block mb-1">メールアドレス</label>
+          <input type="email" name="email" class="w-full border px-3 py-2 rounded" required>
+        </div>
+        <div>
+          <label class="block mb-1">お問い合わせ内容</label>
+          <textarea name="message" class="w-full border px-3 py-2 rounded" rows="4" required></textarea>
+        </div>
+        <button type="submit" class="bg-green-600 text-white px-6 py-2 rounded hover:bg-green-700">送信</button>
+      </form>
+    </div>
+  </section>
+
+  <section class="hidden bg-white py-24" id="thank-you">
+    <div class="max-w-xl mx-auto px-4 text-center">
+      <h3 class="text-2xl font-bold mb-4">お問い合わせありがとうございます</h3>
+      <p class="text-lg">担当者から2営業日以内にご連絡いたします。</p>
     </div>
   </section>
 
