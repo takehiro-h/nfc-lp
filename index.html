@@ -16,8 +16,7 @@
         const formData = new FormData(form);
         const data = Object.fromEntries(formData);
 
-        // バリデーション
-        if (!data.name || !data.email || !data.message) {
+        if (!data.company || !data.position || !data.lastName || !data.firstName || !data.email || !data.phone || !data.message) {
           alert("未記入の項目があります");
           return;
         }
@@ -105,13 +104,30 @@
       <p class="mb-6">ご不明点やご相談があれば、以下のフォームからお気軽にご連絡ください。</p>
       <form class="space-y-4 text-left" action="https://formspree.io/f/xyzjajar" method="POST">
         <input type="hidden" name="_subject" value="カヨッタLPからのお問い合わせ" />
+
         <div>
-          <label class="block mb-1">お名前</label>
-          <input type="text" name="name" class="w-full border px-3 py-2 rounded" required>
+          <label class="block mb-1">会社名</label>
+          <input type="text" name="company" class="w-full border px-3 py-2 rounded" required>
+        </div>
+        <div>
+          <label class="block mb-1">役職</label>
+          <input type="text" name="position" class="w-full border px-3 py-2 rounded" required>
+        </div>
+        <div>
+          <label class="block mb-1">姓</label>
+          <input type="text" name="lastName" class="w-full border px-3 py-2 rounded" required>
+        </div>
+        <div>
+          <label class="block mb-1">名</label>
+          <input type="text" name="firstName" class="w-full border px-3 py-2 rounded" required>
         </div>
         <div>
           <label class="block mb-1">メールアドレス</label>
           <input type="email" name="email" class="w-full border px-3 py-2 rounded" required>
+        </div>
+        <div>
+          <label class="block mb-1">電話番号</label>
+          <input type="tel" name="phone" class="w-full border px-3 py-2 rounded" required>
         </div>
         <div>
           <label class="block mb-1">お問い合わせ内容</label>
